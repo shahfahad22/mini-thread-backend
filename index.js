@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-let port = 9080;
+let port = process.env.PORT || 9080;
 let path = require("path");
 const { v4: uuidv4 } = require("uuid");
 let methodOverride = require("method-override");
@@ -48,7 +48,6 @@ app.post("/posts", (req, res) => {
 app.get("/posts/:id", (req, res) => {
   let { id } = req.params;
   let post = posts.find((p) => p.id === id);
-
   res.render("showPost.ejs", { post });
 });
 
@@ -56,7 +55,6 @@ app.get("/posts/:id", (req, res) => {
 app.get("/posts/:id/edit", (req, res) => {
   let { id } = req.params;
   let post = posts.find((p) => p.id === id);
-
   res.render("editPost.ejs", { post });
 });
 
@@ -64,22 +62,17 @@ app.get("/posts/:id/edit", (req, res) => {
 app.patch("/posts/:id", (req, res) => {
   let { id } = req.params;
   let post = posts.find((p) => p.id === id);
-
   post.content = req.body.content;
-
   res.redirect("/posts");
 });
 
 // DELETE Post 
 app.delete("/posts/:id", (req, res) => {
   let { id } = req.params;
-
   posts = posts.filter((p) => p.id !== id);
-
   res.redirect("/posts");
 });
 
-// Start Server
 app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+  console.log("Server running on port", port);
 });
