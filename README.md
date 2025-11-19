@@ -18,7 +18,7 @@ _Add your deployed Render, Railway, or Vercel backend URL above._
 
 Add your screenshots here:
 
-![App Screenshot 1](./screenshots/screen1.png)
+![App Screenshot 1](https://github.com/shahfahad22/mini-thread-backend/blob/f625020336bb1e553e96067b769ef5a61ca123b0/public/Images/Screenshot.png)
 
 
 ---
