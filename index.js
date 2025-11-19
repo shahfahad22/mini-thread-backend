@@ -13,7 +13,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-// In-memory posts array
+// In-memory posts
 let posts = [
   {
     id: uuidv4(),
@@ -24,11 +24,11 @@ let posts = [
 
 // Routes
 app.get("/posts", (req, res) => {
-  res.render("index.ejs", { posts });
+  res.render("index", { posts });
 });
 
 app.get("/posts/new", (req, res) => {
-  res.render("newPost.ejs");
+  res.render("newPost");
 });
 
 app.post("/posts", (req, res) => {
@@ -40,12 +40,12 @@ app.post("/posts", (req, res) => {
 
 app.get("/posts/:id", (req, res) => {
   const post = posts.find(p => p.id === req.params.id);
-  res.render("showPost.ejs", { post });
+  res.render("showPost", { post });
 });
 
 app.get("/posts/:id/edit", (req, res) => {
   const post = posts.find(p => p.id === req.params.id);
-  res.render("editPost.ejs", { post });
+  res.render("editPost", { post });
 });
 
 app.patch("/posts/:id", (req, res) => {
@@ -61,4 +61,10 @@ app.delete("/posts/:id", (req, res) => {
 
 // Export for Vercel
 module.exports = app;
-module.exports.handler = require("serverless-http")(app);
+module.exports.handler = serverless(app);
+
+// Local development port
+if (process.env.NODE_ENV !== "production") {
+  const PORT = process.env.PORT || 9080;
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+}
