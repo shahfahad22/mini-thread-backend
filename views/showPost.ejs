@@ -1,18 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Post Details</title>
-<link rel="stylesheet" href="/styles.css" />
-</head>
-<body>
-<h1 class="main-title">Post Details</h1>
-
-
-<div class="single-post">
-<h2 class="post-user">@<%= post.username %></h2>
-<p class="post-content"><%= post.content %></p>
-</div>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Post Details</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <h1 class="main-title">Post Details</h1>
+    <div class="single-post">
+      <h2 class="post-user">@<%= post.username %></h2>
+      <p class="post-content"><%= post.content %></p>
+    </div>
+  </body>
 </html>
