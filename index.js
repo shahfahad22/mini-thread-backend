@@ -61,4 +61,4 @@ app.delete("/posts/:id", (req, res) => {
 
 // Export for Vercel
 module.exports = app;
-module.exports.handler = serverless(app);
+module.exports.handler = require("serverless-http")(app);
