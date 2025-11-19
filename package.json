@@ -1,22 +1,20 @@
 {
-  "name": "backend",
+  "name": "mini-thread-backend",
   "version": "1.0.0",
-  "description": "Simple Node.js Express Backend",
+  "description": "Mini Thread Backend - Node.js + Express + EJS + Vercel Ready",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js",
-    "build": "echo Build complete!"
+    "dev": "nodemon index.js"
   },
-  "keywords": [],
-  "author": "fahad",
+  "author": "Shah Fahad",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
     "ejs": "^3.1.10",
     "express": "^5.1.0",
     "method-override": "^3.0.0",
-    "serverless-http": "^4.0.0",
+    "serverless-http": "^3.6.0",
     "uuid": "^13.0.0"
   },
   "devDependencies": {
