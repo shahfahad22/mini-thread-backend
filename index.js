@@ -1,9 +1,9 @@
 const express = require("express");
+const serverless = require("serverless-http");
 const app = express();
-let port = process.env.PORT || 9080;
-let path = require("path");
+const path = require("path");
 const { v4: uuidv4 } = require("uuid");
-let methodOverride = require("method-override");
+const methodOverride = require("method-override");
 
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
@@ -13,66 +13,36 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
 
 let posts = [
-  {
-    id: uuidv4(),
-    username: "Shah Fahad",
-    content: "This is my first custom thread post!"
-  }
+  { id: uuidv4(), username: "Shah Fahad", content: "This is my first custom thread post!" }
 ];
 
 // Home Page
-app.get("/posts", (req, res) => {
-  res.render("index.ejs", { posts });
-});
-
-// Create Page
-app.get("/posts/new", (req, res) => {
-  res.render("newPost.ejs");
-});
-
-// Create Post
+app.get("/posts", (req, res) => res.render("index.ejs", { posts }));
+app.get("/posts/new", (req, res) => res.render("newPost.ejs"));
 app.post("/posts", (req, res) => {
-  let { username, content } = req.body;
-
-  if (!username.trim() || !content.trim()) {
-    return res.send(" Post cannot be empty!");
-  }
-
-  let id = uuidv4();
-  posts.push({ id, username, content });
-
+  const { username, content } = req.body;
+  if (!username.trim() || !content.trim()) return res.send("Post cannot be empty!");
+  posts.push({ id: uuidv4(), username, content });
   res.redirect("/posts");
 });
-
-// Show Post
 app.get("/posts/:id", (req, res) => {
-  let { id } = req.params;
-  let post = posts.find((p) => p.id === id);
+  const post = posts.find(p => p.id === req.params.id);
   res.render("showPost.ejs", { post });
 });
-
-// Edit Page
 app.get("/posts/:id/edit", (req, res) => {
-  let { id } = req.params;
-  let post = posts.find((p) => p.id === id);
+  const post = posts.find(p => p.id === req.params.id);
   res.render("editPost.ejs", { post });
 });
-
-// Update Post
 app.patch("/posts/:id", (req, res) => {
-  let { id } = req.params;
-  let post = posts.find((p) => p.id === id);
+  const post = posts.find(p => p.id === req.params.id);
   post.content = req.body.content;
   res.redirect("/posts");
 });
-
-// DELETE Post 
 app.delete("/posts/:id", (req, res) => {
-  let { id } = req.params;
-  posts = posts.filter((p) => p.id !== id);
+  posts = posts.filter(p => p.id !== req.params.id);
   res.redirect("/posts");
 });
 
-app.listen(port, () => {
-  console.log("Server running on port", port);
-});
+// Export serverless handler
+module.exports = app;
+module.exports.handler = serverless(app);
